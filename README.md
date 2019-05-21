@@ -60,15 +60,15 @@ Add the configuration below into your config file
         "SALT": "PleaseDefineYourself"
     }
     ```
-    [Configuration.php - Personal ](../personal/lib/Configuration.php) 
+    [Configuration.php - Personal ](./personal/lib/Configuration.php) 
     ```php
         protected $host = 'https://stg-api.gmo-aozora.com/ganb/api/personal/v1';
     ```
-    [Configuration.php - Corporate ](../corporate/lib/Configuration.php) 
+    [Configuration.php - Corporate ](./corporate/lib/Configuration.php) 
     ```php
         protected $host = 'https://stg-api.gmo-aozora.com/ganb/api/corporation/v1';
     ```
-    [Configuration.php - Webhook ](../webhook/lib/Configuration.php) 
+    [Configuration.php - Webhook ](./webhook/lib/Configuration.php) 
     ```php
         protected $host = 'https://stg-api.gmo-aozora.com/ganb/api/webhook/v1';
     ```
@@ -85,25 +85,25 @@ Add the configuration below into your config file
         "SALT": "PleaseDefineYourself"
     }
     ```
-    [Configuration.php - Personal ](../personal/lib/Configuration.php) 
+    [Configuration.php - Personal ](./personal/lib/Configuration.php) 
     ```php
         protected $host = 'https://api.gmo-aozora.com/ganb/api/personal/v1';
     ```
-    [Configuration.php - Corporate ](../corporate/lib/Configuration.php) 
+    [Configuration.php - Corporate ](./corporate/lib/Configuration.php) 
     ```php
         protected $host = 'https://api.gmo-aozora.com/ganb/api/corporation/v1';
     ```
-    [Configuration.php - Webhook ](../webhook/lib/Configuration.php) 
+    [Configuration.php - Webhook ](./webhook/lib/Configuration.php) 
     ```php
         protected $host = 'https://api.gmo-aozora.com/ganb/api/webhook/v1';
     ```
 
 
 ## API Documents
-* [**Auth**](../auth/docs/)
-* [**Personal**](../personal/docs/)
-* [**Corporate**](../corporate/docs/)
-* [**Webhook**](../webhook/docs/)
+* [**Auth**](./auth/docs/)
+* [**Personal**](./personal/docs/)
+* [**Corporate**](./corporate/docs/)
+* [**Webhook**](./webhook/docs/)
 
 
 ## Autor
