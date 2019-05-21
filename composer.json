@@ -1,0 +1,48 @@
+{
+    "name": "GIT_USER_ID/GIT_REPO_ID",
+    "description": "",
+    "keywords": [
+        "swagger",
+        "php",
+        "sdk",
+        "api",
+        "ganb",
+        "gmo"
+    ],
+    "homepage": "https://api.gmo-aozora.com/ganb/developer/api-docs/",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "GMO Aozora net bank",
+            "homepage": "https://api.gmo-aozora.com/ganb/developer/api-docs/"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "guzzlehttp/guzzle": "^6.2",
+        "firebase/php-jwt": "^5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8",
+        "squizlabs/php_codesniffer": "~2.6",
+        "friendsofphp/php-cs-fixer": "~2.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ganb\\Corporate\\Client\\" : "corporate/lib/",
+            "Ganb\\Personal\\Client\\" : "personal/lib/",
+            "Ganb\\Webhook\\Client\\" : "personal/lib/",
+            "Ganb\\" : "auth/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ganb\\Corporate\\Client\\" : "corporate/test/",
+            "Ganb\\Personal\\Client\\" : "personal/test/",
+            "Ganb\\Webhook\\Client\\" : "personal/test/"
+        }
+    }
+}
