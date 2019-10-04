@@ -31,7 +31,7 @@ To install the bindings via [Composer](http://getcomposer.org/), add the followi
     }
   ],
   "require": {
-    "gmoaozora/gmo-aozora-api-php": "*@dev"
+    "gmoaozora/gmo-aozora-api-php": "dev-master"
   }
 }
 ```
