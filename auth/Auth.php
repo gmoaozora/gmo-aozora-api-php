@@ -10,13 +10,13 @@ class Auth
     public $nonce;
     public $config;
 
-    public function __construct($clientID, $clientSecret, $authMethod, $config, $nonce = null)
+    public function __construct($clientID, $clientSecret, $authMethod, $nonce = null)
     {
         $this->clientID = $clientID;
         $this->clientSecret = $clientSecret;
         $this->authMethod = $authMethod;
         $this->nonce = $nonce;
-        $this->config = $config;
+        $this->config = $this->getConfig();
     }
 
     public function oauthAuthorization($sessionID, $scope, $redirectUrl)
@@ -113,40 +113,28 @@ class Auth
         }
     }
 
-    public function refreshSession($err, $token)
+    public function refreshTokens($refresh_token)
     {
-        $responseBody = $err->getResponseBody();
-        $response = json_decode($responseBody, true);
-        if ($response == null) {
-            return false;
+        $headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        $tokenUrl = $this->config['AUTH_BASE_URL'].$this->config['TOKEN_PATH'];
+        if ($this->authMethod === 'BASIC') {
+            $headers['Authorization'] = $this->authorizationHeader($this->clientID, $this->clientSecret);
+        } else {
+            $param['client_id'] = $this->clientID;
+            $param['client_secret'] = $this->clientSecret;
         }
-        if (isset($response['errorCode']) && $response['errorCode'] === 'WG_ERR_105') {
-            $headers['Content-Type'] = 'application/x-www-form-urlencoded';
-            $tokenUrl = $this->config['AUTH_BASE_URL'].$this->config['TOKEN_PATH'];
-            if ($this->authMethod === 'BASIC') {
-                $headers['Authorization'] = $this->authorizationHeader($this->clientID, $this->clientSecret);
-            } else {
-                $param['client_id'] = $this->clientID;
-                $param['client_secret'] = $this->clientSecret;
-            }
-            $param['grant_type'] = 'refresh_token';
-            $param['refresh_token'] = $token["refresh_token"];
+        $param['grant_type'] = 'refresh_token';
+        $param['refresh_token'] = $refresh_token;
 
-            $client = new \GuzzleHttp\Client();
+        $client = new \GuzzleHttp\Client();
 
-            try {
-                $response = $client->request('POST', $tokenUrl, ['headers' => $headers, 'form_params' => $param]);
-                $token = json_decode($response->getBody());
-                if ($token != null && array_key_exists('access_token', $token) && array_key_exists('refresh_token', $token)) {
-                    return $token;
-                } else {
-                    throw new \Exception('token format error');
-                }
-            } catch (GuzzleHttp\Exception\ClientException $e) {
-                throw $e;
-            }
+        try {
+            $response = $client->request('POST', $tokenUrl, ['headers' => $headers, 'form_params' => $param]);
+            $token = json_decode($response->getBody());
+            return $token;
+        } catch (GuzzleHttp\Exception\ClientException $e) {
+            throw $e;
         }
-        return false;
     }
 
     public function isValidToken($idToken, $clientSecret, $nonceInstance)
@@ -176,7 +164,7 @@ class Auth
 
     private function authorizationHeader($clientID, $clientSecret)
     {
-        return 'Basic'.base64_encode($clientID.':'.$clientSecret);
+        return 'Basic '.base64_encode($clientID.':'.$clientSecret);
     }
 
     private function storeNonce($nonce)
