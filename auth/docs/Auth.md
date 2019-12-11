@@ -1,6 +1,6 @@
 # **Ganb\Auth**
 
-All URIs are relative to *https://api.gmo-aozora.com/ganb/api/auth/v1*
+All URIs are relative to *https://stg-api.gmo-aozora.com/ganb/api/auth/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -10,11 +10,13 @@ Method | HTTP request | Description
 ### **authorization**
 > \Ganb\Auth($clientID, $clientSecret, $authMethod, $config)
 
-認可
+### 認可
 
 クライアントがユーザーの認証・認可を得るためのエンドポイント
 
 ### Example
+
+#### authorization
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -24,22 +26,49 @@ const CLIENT_SECRET = "<Your Client Secret>";
 const REDIRECT_URI = "<Your Registered Redirect URI>";
 const AUTH_METHOD = "BASIC"; // Your Auth method BASIC or POST
 
-$ganb = new Ganb\Auth(CLIENT_ID, CLIENT_SECRET, AUTH_METHOD, $config);
+// Authorization
+$ganb = new Ganb\Auth(CLIENT_ID, CLIENT_SECRET, AUTH_METHOD);
 
-$redirectUrl = $ganb->oauthAuthorization($_SESSION['uid'], $scope, $requetTokenOAuthUrl);
-//If you want use openid => $redirectUrl = $ganb->openIDAuthorization($_SESSION['uid'], $scope, $requetTokenOAuthUrl);
+$redirectUrl = $ganb->oauthAuthorization("<Your Session ID>", "<Your socpe>", REDIRECT_URI);
+//If you want use openid => $redirectUrl = $ganb->openIDAuthorization("<Your Session ID>", "<Your socpe>", REDIRECT_URI);
 
-//Get OAuth token
-$token = $ganb->getOAuthToken(REDIRECT_URI, $code);
+echo $redirectUrl;
+```
+
+#### get new token
+```
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+const CLIENT_ID = "<Your Client ID>";
+const CLIENT_SECRET = "<Your Client Secret>";
+const REDIRECT_URI = "<Your Registered Redirect URI>";
+const AUTH_METHOD = "BASIC"; // Your Auth method BASIC or POST
+
+$ganb = new Ganb\Auth(CLIENT_ID, CLIENT_SECRET, AUTH_METHOD);
+
 try {
-    $token = $ganb->getOAuthToken(REDIRECT_URI, $code);
+    $token = $ganb->getOAuthToken(REDIRECT_URI, "<Your code>");
+    var_dump($token);
 } catch (Exception $e) {
     echo $e->getMessage();
 }
+```
 
-//Token refresh
+#### refresh token
+```
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+const CLIENT_ID = "<Your Client ID>";
+const CLIENT_SECRET = "<Your Client Secret>";
+const AUTH_METHOD = "BASIC"; // Your Auth method BASIC or POST
+
+$ganb = new Ganb\Auth(CLIENT_ID, CLIENT_SECRET, AUTH_METHOD);
+
 try {
-    $newToken = $ganb->refreshSession($e, $token);
+    $newToken = $ganb->refreshTokens("<Your Refresh Token>");
+    var_dump($newToken);
 } catch (Exception $e) {
     echo $e->getMessage();
 }
@@ -53,7 +82,6 @@ Name | Type | Description  | Notes
  **clientID** | **string**| client id |
  **clientSecret** | **string**| client secret |
  **authMethod** | **string**| "BASIC" or "POST" |
- **config** | **array**| "SALT"=>"","AUTH_BASE_URL"=>"","AUTH_PATH"=>"","TOKEN_PATH"=>"","JWT_ISSUER"=>"" |
 
 ### oauthAuthorization($sessionID, $scope, $redirectUri)
 Name | Type | Description  | Notes
@@ -81,8 +109,9 @@ Name | Type | Description  | Notes
  **redirectUri** | **string**| redirect uri |
  **code** | **string**| authorization code |
 
-### refreshSession($err, $token)
+### refreshTokens($refreshToken)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **err** | **ClientException**| api error instance |
- **token** | **Array**| token instance |
+ **refreshToken** | **string**| refresh token |
+ 
