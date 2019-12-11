@@ -34,7 +34,7 @@
         "psr-4": {
             "Ganb\\Corporate\\Client\\" : "corporate/lib/",
             "Ganb\\Personal\\Client\\" : "personal/lib/",
-            "Ganb\\Webhook\\Client\\" : "personal/lib/",
+            "Ganb\\Webhook\\Client\\" : "webhook/lib/",
             "Ganb\\" : "auth/"
         }
     },
@@ -42,7 +42,7 @@
         "psr-4": {
             "Ganb\\Corporate\\Client\\" : "corporate/test/",
             "Ganb\\Personal\\Client\\" : "personal/test/",
-            "Ganb\\Webhook\\Client\\" : "personal/test/"
+            "Ganb\\Webhook\\Client\\" : "webhook/test/"
         }
     }
 }
