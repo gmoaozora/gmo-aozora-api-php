@@ -81,7 +81,7 @@ class Configuration
      *
      * @var string
      */
-    protected $host = 'https://stg-api.gmo-aozora.com/ganb/stg-api/corporation/v1';
+    protected $host = 'https://stg-api.gmo-aozora.com/ganb/api/corporation/v1';
 
     /**
      * User agent of the HTTP request, set to "PHP-Swagger" by default
