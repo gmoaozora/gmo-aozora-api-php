@@ -391,8 +391,8 @@ class VaTransaction implements ModelInterface, ArrayAccess
         if ($this->container['partner_name'] === null) {
             $invalidProperties[] = "'partner_name' can't be null";
         }
-        if ((mb_strlen($this->container['partner_name']) > 10)) {
-            $invalidProperties[] = "invalid value for 'partner_name', the character length must be smaller than or equal to 10.";
+        if ((mb_strlen($this->container['partner_name']) > 50)) {
+            $invalidProperties[] = "invalid value for 'partner_name', the character length must be smaller than or equal to 50.";
         }
 
         if ((mb_strlen($this->container['partner_name']) < 1)) {
@@ -793,8 +793,8 @@ class VaTransaction implements ModelInterface, ArrayAccess
      */
     public function setPartnerName($partner_name)
     {
-        if ((mb_strlen($partner_name) > 10)) {
-            throw new \InvalidArgumentException('invalid length for $partner_name when calling VaTransaction., must be smaller than or equal to 10.');
+        if ((mb_strlen($partner_name) > 50)) {
+            throw new \InvalidArgumentException('invalid length for $partner_name when calling VaTransaction., must be smaller than or equal to 50.');
         }
         if ((mb_strlen($partner_name) < 1)) {
             throw new \InvalidArgumentException('invalid length for $partner_name when calling VaTransaction., must be bigger than or equal to 1.');
