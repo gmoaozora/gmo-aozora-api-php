@@ -53,7 +53,7 @@ class Auth
             $response = $client->request('POST', $tokenUrl, ['headers' => $headers, 'form_params' => $param]);
 
             $token = json_decode($response->getBody());
-            if ($token != null && array_key_exists('access_token', $token) && array_key_exists('refresh_token', $token)) {
+            if ($token != null && property_exists($token, 'access_token') && property_exists($token, 'refresh_token')) {
                 return $token;
             } else {
                 throw new \Exception('token format error');
@@ -98,7 +98,7 @@ class Auth
         try {
             $response = $client->request('POST', $tokenUrl, ['headers' => $headers, 'form_params' => $param]);
             $token = json_decode($response->getBody());
-            if ($token != null && array_key_exists('access_token', $token) && array_key_exists('refresh_token', $token) && array_key_exists('id_token', $token)) {
+            if ($token != null && property_exists($token, 'access_token') && property_exists($token, 'refresh_token') && property_exists($token, 'id_token')) {
                 $nonceCheckResult = $this->isValidToken($refresh_token['id_token'], $this->clientSecret, $this->loadNonce());
                 if ($nonceCheckResult == true) {
                     return $token;
@@ -131,7 +131,7 @@ class Auth
         try {
             $response = $client->request('POST', $tokenUrl, ['headers' => $headers, 'form_params' => $param]);
             $token = json_decode($response->getBody());
-            if ($token != null && array_key_exists('access_token', $token) && array_key_exists('refresh_token', $token)) {
+            if ($token != null && property_exists($token, 'access_token') && property_exists($token, 'refresh_token')) {
                 return $token;
             } else {
                 throw new \Exception('token format error');
