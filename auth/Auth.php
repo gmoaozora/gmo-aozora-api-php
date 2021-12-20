@@ -99,7 +99,7 @@ class Auth
             $response = $client->request('POST', $tokenUrl, ['headers' => $headers, 'form_params' => $param]);
             $token = json_decode($response->getBody());
             if ($token != null && property_exists($token, 'access_token') && property_exists($token, 'refresh_token') && property_exists($token, 'id_token')) {
-                $nonceCheckResult = $this->isValidToken($refresh_token['id_token'], $this->clientSecret, $this->loadNonce());
+                $nonceCheckResult = $this->isValidToken($token['id_token'], $this->clientSecret, $this->loadNonce());
                 if ($nonceCheckResult == true) {
                     return $token;
                 } else {
